@@ -13,3 +13,4 @@ presentation.add_slide("Another slide", background=bg_image)
 # 生成 HTML 簡報
 presentation.save_to_file("my_presentation.html")
 print("簡報生成完成！")
+ 
