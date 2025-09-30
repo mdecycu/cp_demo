@@ -10,6 +10,8 @@ bg_image = ImageBackground(image_url=bg_image_path)
 presentation.add_slide("Introduction to Computer Programming\n\
 Introduction to the components of the portable system", background=bg_image)
 presentation.add_slide("Another slide", background=bg_image)
+presentation.add_slide("抱歉我測試看看", background=bg_image)
+presentation.add_slide("測試2", background=bg_image)
 
 # 生成 HTML 簡報
 presentation.save_to_file("my_presentation.html")
