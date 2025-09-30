@@ -8,7 +8,8 @@ bg_image = ImageBackground(image_url=bg_image_path)
 
 # 加入幻燈片
 presentation.add_slide("Welcome!", background=bg_image)
-presentation.add_slide("Another slide", background=bg_image)
+presentation.add_slide("Welcome!1", background=bg_image)
+presentation.add_slide("end", background=bg_image)
 
 # 生成 HTML 簡報
 presentation.save_to_file("my_presentation.html")
