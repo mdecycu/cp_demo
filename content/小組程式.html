@@ -142,119 +142,84 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">小組程式 << <a href='小組程式.html'>Previous</a> <a href='Python.html'>Next</a> >> Python<br /><h1>Project</h1>
-<p>既存技術:</p>
-<p style="padding-left: 30px;"><a href="https://github.com/scrum-1/respysive-slide">https://github.com/scrum-1/respysive-slide</a> (功能最完整，可以與許多 Python 模組結合)</p>
-<p style="padding-left: 30px;"><a href="https://github.com/tavallaie/pyreveal">https://github.com/tavallaie/pyreveal</a> </p>
-<p style="padding-left: 30px;"><a href="https://github.com/naviddianati/python-reveal">https://github.com/naviddianati/python-reveal</a> </p>
-<p style="padding-left: 30px;"><a href="https://github.com/apiad/auditorium">https://github.com/apiad/auditorium</a> </p>
-<p>專案簡介：分散式 Reveal.js 簡報編輯系統</p>
-<p>這是一個使用 Flask 所建立的 Web 編輯器，用於多人協作編輯 Reveal.js 簡報內容（以 Markdown 撰寫），並透過 Git 作為儲存與版本控制工具。每位使用者可在本地端啟動編輯介面，修改後使用自己的 GitHub Token 或 SSH 金鑰來 git push 到遠端分支，藉此保留作者身分與提交記錄。</p>
-<p>整個系統的設計理念為：</p>
-<ol>
-<li>本地運行：使用者 clone 後可在本地執行 Flask 網頁伺服器。</li>
-<li>Web 編輯介面：提供簡單的 Markdown 編輯器與 Reveal.js 預覽。</li>
-<li>Git 管理版本：使用者使用自己的 Git 身份（token 或 SSH）將內容推送到遠端分支。</li>
-<li>非同步協作：統一合併簡報內容透過 Pull Request 或 Git 合併流程。</li>
-<li>這套系統不需要後端帳號認證與 Git 操作，而是透過 GitHub 分支和 PR 工作流，達成簡潔、可追蹤、模組化的多人協作。</li>
-</ol>
-<p>專案目錄架構</p>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">slides-editor/
-├── app.py                   # Flask 網頁應用主程式
-├── templates/
-│   └── editor.html          # Markdown 編輯頁面 + Reveal.js 預覽
-├── slides/
-│   └── slides.md            # 使用者實際編輯的簡報 Markdown 檔案
-├── requirements.txt         # Python 相依套件
-└── README.md                # 專案說明
-</pre>
-<p>啟動本地 Flask Web 編輯器<br/><br/>功能描述：使用者在自己的電腦上執行 Flask 應用，開啟 localhost 編輯介面。<br/><br/>app.py</p>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from flask import Flask, render_template, request, redirect, url_for
-import os
+    <div id="tipue_search_content">About << <a href='About.html'>Previous</a> <a href='Project.html'>Next</a> >> Project<br /><h1>小組程式</h1>
+<p><a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/41423230zhang/18a8fe927a52bc66dfb5a8b42778b4be/raw/eddc652ded99c1ad0a21d7a5f821e92e63a9987a/">python</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># 初始化世界與機器人
+# 利用 robot 物件中的 World 方法
+# 建立一個 10x10 的模擬世界
+xx=11
+yy=9
+w = robot.World(xx,yy)
+x = xx-1
+y = yy//2
+z = yy
+k = xx
+# 利用 robot 物件的 AnimatedRobot 方法
+# 針對 w 進行動態模擬, 且讓機器人位於 (1, 1)
+r = robot.AnimatedRobot(w, 1, 1)
+################################################
+# 範例 1
+# 基本變數與數值操作
+################################################
+# r 為透過上列程式所建立的動態模擬機器人物件
+steps = 3
+# 讓機器人往前移動 steps 步數
+def turn_left():
+    r.turn_left()
+    r.turn_left()
+    r.turn_left()
+for two_line in range(y):
+    r.move(x)
+    r.turn_left()
+    r.move(1)
+    r.turn_left()
+    r.move(x)
+    turn_left()
+    r.move(1)
+    turn_left()
+if z % 2 != 0:
+    r.move(k-1)
 
-app = Flask(__name__)
-SLIDES_PATH = os.path.join("slides", "slides.md")
 
-@app.route("/", methods=["GET", "POST"])
-def editor():
-    if request.method == "POST":
-        markdown = request.form["markdown"]
-        with open(SLIDES_PATH, "w", encoding="utf-8") as f:
-            f.write(markdown)
-        return redirect(url_for("editor"))
+-----------------------------------------------------------------------------------
 
-    with open(SLIDES_PATH, "r", encoding="utf-8") as f:
-        markdown = f.read()
-    return render_template("editor.html", content=markdown)
-
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
-</pre>
-<p>前端 Reveal.js + Markdown 編輯器<br/><br/>功能描述：提供網頁介面讓使用者編輯 Markdown，並即時預覽 Reveal.js 簡報。<br/><br/>templates/editor.html</p>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;meta charset="utf-8"&gt;
-  &lt;title&gt;簡報編輯器&lt;/title&gt;
-  &lt;script src="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.min.js"&gt;&lt;/script&gt;
-  &lt;script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"&gt;&lt;/script&gt;
-  &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.css"&gt;
-  &lt;style&gt;
-    textarea { width: 100%; height: 300px; margin-bottom: 1em; font-family: monospace; }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;h1&gt;Markdown 編輯器&lt;/h1&gt;
-  &lt;form method="POST"&gt;
-    &lt;textarea name="markdown"&gt;{{ content }}&lt;/textarea&gt;
-    &lt;br&gt;
-    &lt;button type="submit"&gt;儲存&lt;/button&gt;
-  &lt;/form&gt;
-
-  &lt;hr&gt;
-  &lt;h2&gt;Reveal.js 預覽&lt;/h2&gt;
-  &lt;div class="reveal"&gt;
-    &lt;div class="slides" id="slides"&gt;&lt;/div&gt;
-  &lt;/div&gt;
-
-  &lt;script&gt;
-    const markdown = document.querySelector("textarea").value;
-    const slidesDiv = document.getElementById("slides");
-
-    const slides = markdown.split(/^---$/m);
-    const html = slides.map(md =&gt; `&lt;section&gt;${marked.parse(md)}&lt;/section&gt;`).join('');
-    slidesDiv.innerHTML = html;
-
-    Reveal.initialize();
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</pre>
-<p>Git 操作由使用者本地負責（非後端）<br/><br/>功能描述：使用者在本地透過 CLI 執行 Git 操作，使用自己的身份進行 commit 與 push。<br/><br/>指令建議（你可印在前端或 README 中）</p>
-<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false"># 取得最新版本
-git pull origin main
-
-# 建立新的分支
-git checkout -b users/your-name-update
-
-# 加入修改的檔案
-git add slides/slides.md
-
-# 提交變更
-git commit -m "新增第 5 頁投影片"
-
-# 推送到遠端分支（使用者自己的 Git 身份）
-git push origin users/your-name-update
-
-# 接著到 GitHub 建立 Pull Request
-</pre>
-<p>使用者操作指令</p>
-<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">git checkout -b users/你的名字-20250926
-git add slides/slides.md
-git commit -m "更新簡報內容"
-git push origin users/你的名字-20250926</pre>
-<p></p>
-<br />小組程式 << <a href='小組程式.html'>Previous</a> <a href='Python.html'>Next</a> >> Python</div>
+# 初始化世界與機器人
+# 利用 robot 物件中的 World 方法
+# 建立一個 10x10 的模擬世界
+xx=11
+yy=9
+w = robot.World(xx,yy)
+x = xx//2
+y = yy-1
+z = xx
+k = yy
+# 利用 robot 物件的 AnimatedRobot 方法
+# 針對 w 進行動態模擬, 且讓機器人位於 (1, 1)
+r = robot.AnimatedRobot(w, 1, 1)
+################################################
+# 範例 1
+# 基本變數與數值操作
+################################################
+# r 為透過上列程式所建立的動態模擬機器人物件
+steps = 3
+# 讓機器人往前移動 steps 步數
+def turn_left():
+    r.turn_left()
+    r.turn_left()
+    r.turn_left()
+for two_line in range(x):
+    r.turn_left()
+    r.move(y)
+    turn_left()
+    r.move(1)
+    turn_left()
+    r.move(y)
+    r.turn_left()
+    r.move(1)
+if z % 2 != 0:
+    r.turn_left()
+    r.move(k-1)</pre>
+<p></p><br />About << <a href='About.html'>Previous</a> <a href='Project.html'>Next</a> >> Project</div>
         
     <!-- footer -->
       <div class="container">
