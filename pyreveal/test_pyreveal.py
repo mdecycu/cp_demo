@@ -7,8 +7,8 @@ presentation = PyReveal(title="My Presentation", theme="white", transition="slid
 bg_image = ImageBackground(image_url=bg_image_path)
 
 # 加入幻燈片
-presentation.add_slide("計算機程式概論\n\
-可攜式系統組成內容介紹", background=bg_image)
+presentation.add_slide("Introduction to Computer Programming\n\
+Introduction to the components of the portable system", background=bg_image)
 presentation.add_slide("Another slide", background=bg_image)
 
 # 生成 HTML 簡報
