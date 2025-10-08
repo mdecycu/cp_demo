@@ -1,26 +1,219 @@
 
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <link rel="stylesheet" href="revealjs/dist/reveal.css">
-        <link rel="stylesheet" href="revealjs/dist/theme/white.css">
-        <script src="revealjs/dist/reveal.js"></script>
-        
-
-    </head>
-    <body>
-        <div class="reveal">
-            <div class="slides">
-                <section  data-background="assets\blockhole.jpg">Introduction to Computer Programming
-Introduction to the components of the portable system</section>
-<section  data-background="assets\blockhole.jpg">Another slide</section>
-            </div>
+            <html>
+             <head>
+              <meta charset="UTF-8">
+              <link type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.4.0/reveal.min.css' rel='stylesheet'>
+<link type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.4.0/theme/moon.min.css' rel='stylesheet'>
+<link type='text/css' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet'>
+<link type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css' rel='stylesheet'>
+              <style type='text/css'>svg{max-width: 100%;}</style>
+              <script src='https://cdn.jsdelivr.net/npm/vega@5' type='text/javascript'></script>
+<script src='https://cdn.jsdelivr.net/npm/vega-lite@4.8' type='text/javascript'></script>
+<script src='https://cdn.jsdelivr.net/npm/vega-embed@6' type='text/javascript'></script>
+<script src='https://cdn.plot.ly/plotly-3.0.1.min.js' type='text/javascript'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js' type='text/javascript'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js' type='text/javascript'></script>
+<script src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js' type='text/javascript'></script>
+             </head>
+             <body>
+                
+                <div class='reveal'>
+                    <div class='slides'>
+                        <section  class='center'>
+        <div class='container' style='text-align: left;' >
+            
+            <div class="title-page"><div class="row"><div class="col-12"><h2 style='color: #e63946;font-size: 60px;' class='r-fit-text border-top'">計算機程式概論課程</h2></div></div><div class="row"><div class="col-12"><h3 style='color: #457b9d;font-size: 36px;'">可攜式系統組成內容介紹</h3></div></div><div class="row align-items-center"><div class="col-9"><h4 style='color: #457b9d;font-size: 30px;'">組員：41423201余思葶、41423204徐雨晴、41423205張詠晴、41423224林靖叡、41423230張倬翊、41423248蔡承修</h3></div><div class="col-3 "><img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Fractal_canopy.svg" style='filter: invert(100%) opacity(30%);'"></div></div></div>
         </div>
-        <script>
-            Reveal.initialize({
-                transition: 'slide'
-            });
-        </script>
-    </body>
-    </html>
-    
+    </section>
+<section  class=''>
+        <div class='container' style='text-align: left;' >
+            
+            <div class='row'><div class='col-12 mx-auto'><div>
+ <h3>
+  <span style="font-size:50px;">
+   Git是什麼
+  </span>
+ </h3>
+</div>
+</div></div><div class='row'><div class='col-md-12 responsive-text'><div>
+ <div>
+  <p class="fragment" style="font-size:36px;">
+   「凡走過必留下痕跡」Git就是在做這件事情，任何一舉一動 Git 都記錄了下來，並且同步遠端的資料庫
+  </p>
+  <p class="fragment" style="font-size:36px;">
+   Repository（儲存庫）：專案的資料夾，裡面有 Git 記錄的歷史。
+  </p>
+  <p class="fragment" style="font-size:36px;">
+   Commit（提交）：你每次存檔，會有一個版本紀錄（誰改的、改了什麼）。
+  </p>
+  <p class="fragment" style="font-size:36px;">
+   Branch（分支）：你可以平行開不同的開發線路，不會互相干擾。
+  </p>
+  <p class="fragment" style="font-size:36px;">
+   Merge（合併）：把分支的改動整合回來。
+  </p>
+  <p class="fragment" style="font-size:36px;">
+   Remote（遠端）：像 GitHub、GitLab、Bitbucket 這種雲端版本庫，讓大家可以同步合作。
+  </p>
+ </div>
+</div>
+</div></div>
+        </div>
+    </section>
+<section  class=''>
+        <div class='container' style='text-align: left;' >
+            
+            <div class='row'><div class='col-12 mx-auto'><div>
+ <h3>
+  <span style="font-size:50px;">
+   GitHub是什麼?
+  </span>
+ </h3>
+</div>
+</div></div><div class='row'><div class='col-md-12 responsive-text'><div>
+ <div>
+  <p style="font-size:36px;">
+   GitHub集結了世界各地許多工程師的智慧結晶，舉凡是資料庫、開源程式碼等等這些都可以在 GitHub 上找到相關的資料庫。
+   <br/>
+   AI 神經網絡甚至也可以從中找到模組或者架構，就例如：AI 網路爬蟲、tensorflow 這類的神經網絡架構，因此只要會寫程式或對某個程式應用方面有些許了解，GitHub 上的資料就可以提供強力幫助。
+  </p>
+  <br/>
+  <img src="assets/201510294LJJGcc6vv.jpg" style="width:400px; display:block; margin:auto;"/>
+ </div>
+</div>
+</div></div>
+        </div>
+    </section>
+<section  class=''>
+        <div class='container' style='text-align: left;' >
+            
+            <div class='row'><div class='col-12 mx-auto'><div>
+ <h3>
+  <span style="font-size:50px;">
+   Gits是什麼?
+  </span>
+ </h3>
+</div>
+</div></div><div class='row'><div class='col-md-12 responsive-text'><div>
+ <div>
+  <p style="font-size:36px;">
+   Gits 用來快速分享程式碼片段、筆記或任何文字檔，並且只要有連結就可以快速地將檔案分享給其他人。
+   <br/>
+   常被用來放程式碼範例、快速筆記、或是分享設定檔。
+  </p>
+ </div>
+</div>
+</div></div>
+        </div>
+    </section>
+<section  class=''>
+        <div class='container' style='text-align: left;' >
+            
+            <div class='row'><div class='col-12 mx-auto'><div>
+ <h3>
+  <span style="font-size:50px;">
+   Cmsimde是什麼?
+  </span>
+ </h3>
+</div>
+</div></div><div class='row'><div class='col-md-12 responsive-text'><div>
+ <div>
+  <p style="font-size:36px;">
+   CMSiMDE 是一套以 Python 和 Flask 框架開發的網際內容管理系統，專注於機械設計領域，可管理數位內容，並具有部落格與網頁簡報製作等功能。
+  </p>
+ </div>
+</div>
+</div></div>
+        </div>
+    </section>
+<section  class='center'>
+        <div class='container' style='text-align: left;' >
+            
+            <div class='row'><div class='col-12 mx-auto'><div>
+ <h3>
+  <span style="font-size:50px;">
+   感謝聆聽
+   <br/>
+   報告完畢
+  </span>
+ </h3>
+</div>
+</div></div>
+        </div>
+    </section>
+                    </div>
+                </div>
+                <!--Correction to allow transition between slides-->
+                <style type='text/css'>[hidden] {display: inherit !important;}</style>
+                
+            <script>
+            function adjustTextSize() {
+                var elements = document.getElementsByClassName('responsive-text');
+                for (var i = 0; i < elements.length; i++) {
+                    var element = elements[i];
+                    var containerHeight = element.clientHeight;
+                    var textHeight = element.scrollHeight;
+                    var fontSize = 70; // Taille de police initiale en pourcentage
+
+                    // Réduire la taille de la police jusqu'à ce que le texte s'adapte
+                    while (textHeight > containerHeight && fontSize > 5) {
+                        fontSize -= 1; 
+                        element.style.fontSize = fontSize + '%';
+                        textHeight = element.scrollHeight; // Recalculer la hauteur du texte
+                    }
+                }
+            }
+
+            // Ajuster la taille du texte au chargement et au redimensionnement de la fenêtre
+            window.addEventListener('load', adjustTextSize);
+            window.addEventListener('resize', adjustTextSize);
+            </script>
+            
+                <script>
+                // from nbconvert
+                require(
+                {
+                  waitSeconds: 15
+                },
+                [
+                  "https://unpkg.com/reveal.js@4.4.0/dist/reveal.js",
+                  "https://unpkg.com/reveal.js@4.4.0/plugin/notes/notes.js"
+                ],
+
+                function(Reveal, RevealNotes){
+                    Reveal.initialize({
+                        pdfMaxPagesPerSlide: 1,
+                        pdfSeparateFragments: false,
+                        display:'block',
+                        slideNumber: 'c/t',  
+                        controls: true,
+                        progress: true,
+                        history: true,
+                        transition: "slide",
+                        plugins: [RevealNotes],
+                        width: 960,
+                        height: 600,
+                        center: true,
+                        embedded: false,
+                        margin: 0.1,
+                        minScale: 0.2,
+                        maxScale: 1.5,
+                    });
+
+                    var update = function(event){
+                      if(typeof MathJax !== 'undefined' && MathJax.typesetPromise){
+                        MathJax.typesetPromise([Reveal.getCurrentSlide()]).catch(function(err) {
+                          console.warn('MathJax typeset failed:', err);
+                        });
+                      }
+                    };
+
+                    Reveal.addEventListener('slidechanged', update);
+
+                    // Ajuste la taille du texte après chaque changement de diapositive
+                    Reveal.addEventListener('slidechanged', adjustTextSize);
+                }
+                );
+            </script>
+            </body>
+            </html>
