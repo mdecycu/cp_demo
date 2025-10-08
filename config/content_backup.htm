@@ -1,9 +1,9 @@
 <h1>About</h1>
 <p>課程名稱: 計算機程式</p>
 <p><span></span></p>
-<p>小組倉儲：<a href="https://github.com/41423230zhang/cp_demo">https://github.com/41423230zhang/cp_demo</a></p>
-<p>小組網站：<a href="https://41423230zhang.github.io/cp_demo">https://41423230zhang.github.io/cp_demo</a></p>
-<p>小組報告：<a href="https://41423230zhang.github.io/Group2_work/my_presentation.html">https://41423230zhang.github.io/Group2_work/my_presentation.html</a></p>
+<p>小組倉儲：<a href="https://github.com/41423230zhang/Group2_work">https://github.com/41423230zhang/Group2_work</a></p>
+<p>小組網站：<a href="https://41423230zhang.github.io/Group2_work/content/index.html">https://41423230zhang.github.io/Group2_work/content/index.html</a></p>
+<p>小組報告：<a href="https://41423230zhang.github.io/Group2_work/my_presentation.html#/">https://41423230zhang.github.io/Group2_work/my_presentation.html#/</a></p>
 <p>課程評分:</p>
 <p style="padding-left: 30px;"><span style="background-color: #ffff00;">學習心得報告 (60%)</span> - MS Teams 線上參與，<span style="background-color: #ccffcc;">6人一組</span>每三週發表學習心得。</p>
 <p style="padding-left: 60px;">w3、w7、w10、w14、w17、w18</p>
@@ -15,8 +15,312 @@
 <p style="padding-left: 60px;">w17 (<span style="background-color: #ccffcc;">1b 採 Youtube 影片簡報</span>): 計算機程式課程學到了什麼？</p>
 <p style="padding-left: 60px;">w18: 課程總結</p>
 <p style="padding-left: 30px;"><span style="background-color: #ffff00;">個人與分組網站維護 (40%)</span> - 每週至少兩次推送與課程進度相關的學習內容與心得。</p>
-<p style="padding-left: 60px;">w9 期中自評、w18 期末自評</p>
-<h1>Project</h1>
+<p style="padding-left: 60px;">w9 期中自評、w18 期末自評</p><h1>Group2_Code_w</h1>
+<p><a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/41423230zhang/18a8fe927a52bc66dfb5a8b42778b4be/raw/eddc652ded99c1ad0a21d7a5f821e92e63a9987a/">python</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from browser import document, html, timer
+
+CELL_SIZE = 40
+WALL_THICKNESS = 6
+IMG_PATH = "https://mde.tw/cp2025/reeborg/src/images/"
+
+class World:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.layers = self._create_layers()
+        self._init_html()
+        self._draw_grid()
+        self._draw_walls()
+    def _create_layers(self):
+        return {
+            "grid": html.CANVAS(width=self.width * CELL_SIZE, height=self.height * CELL_SIZE),
+            "walls": html.CANVAS(width=self.width * CELL_SIZE, height=self.height * CELL_SIZE),
+            "objects": html.CANVAS(width=self.width * CELL_SIZE, height=self.height * CELL_SIZE),
+            "robots": html.CANVAS(width=self.width * CELL_SIZE, height=self.height * CELL_SIZE),
+        }
+
+    def _init_html(self):
+        container = html.DIV(style={
+            "position": "relative",
+            "width": f"{self.width * CELL_SIZE}px",
+            "height": f"{self.height * CELL_SIZE}px"
+        })
+        for z, canvas in enumerate(self.layers.values()):
+            canvas.style = {
+                "position": "absolute",
+                "top": "0px",
+                "left": "0px",
+                "zIndex": str(z)
+            }
+            container &lt;= canvas
+        document["brython_div1"].clear()
+        document["brython_div1"] &lt;= container
+    def _draw_grid(self):
+        ctx = self.layers["grid"].getContext("2d")
+        ctx.strokeStyle = "#cccccc"
+        for i in range(self.width + 1):
+            ctx.beginPath()
+            ctx.moveTo(i * CELL_SIZE, 0)
+            ctx.lineTo(i * CELL_SIZE, self.height * CELL_SIZE)
+            ctx.stroke()
+        for j in range(self.height + 1):
+            ctx.beginPath()
+            ctx.moveTo(0, j * CELL_SIZE)
+            ctx.lineTo(self.width * CELL_SIZE, j * CELL_SIZE)
+            ctx.stroke()
+
+    def _draw_image(self, ctx, src, x, y, w, h, offset_x=0, offset_y=0):
+        img = html.IMG()
+        img.src = src
+        def onload(evt):
+            px = x * CELL_SIZE + offset_x
+            py = (self.height - 1 - y) * CELL_SIZE + offset_y
+            ctx.drawImage(img, px, py, w, h)
+        img.bind("load", onload)
+    def _draw_walls(self):
+        ctx = self.layers["walls"].getContext("2d")
+        for x in range(self.width):
+            # 北牆：最上方（貼在頂格子正上緣）
+            self._draw_image(ctx, IMG_PATH + "north.png", x, self.height - 1,
+                             CELL_SIZE, WALL_THICKNESS, offset_y=0)
+            # 南牆：最下方（貼在底格子正下緣）
+            self._draw_image(ctx, IMG_PATH + "north.png", x, 0,
+                             CELL_SIZE, WALL_THICKNESS, offset_y=CELL_SIZE - WALL_THICKNESS)
+        for y in range(self.height):
+            # 西牆：最左邊（貼格子內側左緣）
+            self._draw_image(ctx, IMG_PATH + "east.png", 0, y,
+                             WALL_THICKNESS, CELL_SIZE, offset_x=0)
+            # 東牆：最右邊（貼格子內側右緣）
+            self._draw_image(ctx, IMG_PATH + "east.png", self.width - 1, y,
+                             WALL_THICKNESS, CELL_SIZE, offset_x=CELL_SIZE - WALL_THICKNESS)
+
+    def robot(self, x, y):
+        ctx = self.layers["robots"].getContext("2d")
+        self._draw_image(ctx, IMG_PATH + "blue_robot_e.png", x - 1, y - 1,
+                         CELL_SIZE, CELL_SIZE)
+
+class AnimatedRobot:
+    def __init__(self, world, x, y):
+        self.world = world
+        self.x = x - 1
+        self.y = y - 1
+        self.facing = "E"
+        self.facing_order = ["E", "N", "W", "S"]
+        self.robot_ctx = world.layers["robots"].getContext("2d")
+        self.trace_ctx = world.layers["objects"].getContext("2d")
+        self.queue = []
+        self.running = False
+        self._draw_robot()
+
+    def _robot_image(self):
+        return {
+            "E": "blue_robot_e.png",
+            "N": "blue_robot_n.png",
+            "W": "blue_robot_w.png",
+            "S": "blue_robot_s.png"
+        }[self.facing]
+
+    def _draw_robot(self):
+        self.robot_ctx.clearRect(0, 0, self.world.width * CELL_SIZE, self.world.height * CELL_SIZE)
+        self.world._draw_image(self.robot_ctx, IMG_PATH + self._robot_image(),
+                               self.x, self.y, CELL_SIZE, CELL_SIZE)
+
+    def _draw_trace(self, from_x, from_y, to_x, to_y):
+        ctx = self.trace_ctx
+        ctx.strokeStyle = "#d33"
+        ctx.lineWidth = 2
+        ctx.beginPath()
+        fx = from_x * CELL_SIZE + CELL_SIZE / 2
+        fy = (self.world.height - 1 - from_y) * CELL_SIZE + CELL_SIZE / 2
+        tx = to_x * CELL_SIZE + CELL_SIZE / 2
+        ty = (self.world.height - 1 - to_y) * CELL_SIZE + CELL_SIZE / 2
+        ctx.moveTo(fx, fy)
+        ctx.lineTo(tx, ty)
+        ctx.stroke()
+
+    def move(self, steps):
+        def action(next_done):
+            def step():
+                nonlocal steps
+                if steps == 0:
+                    next_done()
+                    return
+                from_x, from_y = self.x, self.y
+                dx, dy = 0, 0
+                if self.facing == "E":
+                    dx = 1
+                elif self.facing == "W":
+                    dx = -1
+                elif self.facing == "N":
+                    dy = 1
+                elif self.facing == "S":
+                    dy = -1
+                next_x = self.x + dx
+                next_y = self.y + dy
+    
+                # ✅ 邊界檢查
+                if 0 &lt;= next_x &lt; self.world.width and 0 &lt;= next_y &lt; self.world.height:
+                    self.x, self.y = next_x, next_y
+                    self._draw_trace(from_x, from_y, self.x, self.y)
+                    self._draw_robot()
+                    steps -= 1
+                    timer.set_timeout(step, 200)
+                else:
+                    print("🚨 已經撞牆，停止移動！")
+                    next_done()
+            step()
+        self.queue.append(action)
+        self._run_queue()
+
+    def turn_left(self):
+        def action(done):
+            idx = self.facing_order.index(self.facing)
+            self.facing = self.facing_order[(idx + 1) % 4]
+            self._draw_robot()
+            timer.set_timeout(done, 300)
+        self.queue.append(action)
+        self._run_queue()
+
+    def _run_queue(self):
+        if self.running or not self.queue:
+            return
+        self.running = True
+        action = self.queue.pop(0)
+        action(lambda: self._done())
+
+    def _done(self):
+        self.running = False
+        self._run_queue()
+
+# 初始化世界與機器人
+# 利用 robot 物件中的 World 方法
+# 建立一個 10x10 的模擬世界
+xx=11
+yy=9
+w = robot.World(xx,yy)
+x = xx//2
+y = yy-1
+z = xx
+k = yy
+# 利用 robot 物件的 AnimatedRobot 方法
+# 針對 w 進行動態模擬, 且讓機器人位於 (1, 1)
+r = robot.AnimatedRobot(w, 1, 1)
+################################################
+# 範例 1
+# 基本變數與數值操作
+################################################
+# r 為透過上列程式所建立的動態模擬機器人物件
+steps = 3
+# 讓機器人往前移動 steps 步數
+def turn_left():
+    r.turn_left()
+    r.turn_left()
+    r.turn_left()
+for two_line in range(x):
+    r.turn_left()
+    r.move(y)
+    turn_left()
+    r.move(1)
+    turn_left()
+    r.move(y)
+    r.turn_left()
+    r.move(1)
+if z % 2 != 0:
+    r.turn_left()
+    r.move(k-1)</pre>
+<p><a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/41423230zhang/1c8c4011f44ccd928fdc17145cd4953b/raw/028acdc9d69aa6987cd16035e3d54b2851761247/1b_w4_showup.py">1b_w4_showup.py</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import pandas as pd
+
+# === 讀取全班學生名單（學號\t姓名） ===
+stud_df = pd.read_csv("1b_stud_list.csv", encoding='utf-8')
+stud_df.drop_duplicates(subset=[stud_df.columns[0]], inplace=True)
+
+# 建立姓名→學號字典
+name_to_num = {}
+for row in stud_df.iloc[:, 0]:
+    parts = row.split('\t')
+    if len(parts) &gt;= 2:
+        student_num = parts[0].strip()
+        student_name = parts[1].strip()
+        name_to_num[student_name] = student_num
+
+# === 讀取出席名單 ===
+show_df = pd.read_csv("1b_w4.csv", encoding='utf-16')
+show_df.drop_duplicates(subset=[show_df.columns[0]], inplace=True)
+names_list = show_df.iloc[:, 0].dropna().tolist()
+
+# 將出席姓名轉為學號
+showup_nums = []
+for name in names_list:
+    if isinstance(name, str):
+        student_name = name.split('\t')[0].strip()  # 只取姓名部分
+        if student_name in name_to_num:
+            showup_nums.append(name_to_num[student_name])
+
+# 去重並依學號排序
+showup_nums = sorted(list(set(showup_nums)), key=lambda x: int(x))
+
+# === 輸出 CSV ===
+pd.DataFrame(showup_nums, columns=["學號"]).to_csv("1b_w4_showup.csv", index=False, encoding="utf-8-sig")
+
+print(f"✅ 已將出席名單轉為學號並輸出至 1b_w4_showup.csv，共 {len(showup_nums)} 位學生")</pre>
+<p><a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/41423230zhang/4992d44ff4ecf05004a407317ff758e4/raw/2f84203834910a83467c526318821e299b6d5b57/1b_stud_list.py">1b_w4_list.py</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import pandas as pd
+
+# === 讀取全班學生名單 ===
+stud_df = pd.read_csv("1b_stud_list.csv", encoding='utf-8')
+stud_df.drop_duplicates(subset=[stud_df.columns[0]], inplace=True)
+
+# 建立姓名→學號字典
+a_dict = {}
+for row in stud_df.iloc[:, 0]:
+    parts = row.split('\t')
+    if len(parts) &gt;= 2:
+        student_num = parts[0].strip()
+        student_name = parts[1].strip()
+        a_dict[student_name] = student_num
+
+# 全部學生名單
+all_students = set(a_dict.keys())
+
+# === 讀取出席名單 ===
+show_df = pd.read_csv("1b_w4.csv", encoding='utf-16')
+show_df.drop_duplicates(subset=[show_df.columns[0]], inplace=True)
+names_list = show_df.iloc[:, 0].dropna().tolist()
+
+# 整理出席名單
+showup_names = set()
+for entry in names_list:
+    if isinstance(entry, str):
+        parts = entry.split('\t')
+        student_name = parts[0].strip() if len(parts) &gt;= 1 else entry.strip()
+        if student_name:
+            showup_names.add(student_name)
+
+# === 比對出席與缺席 ===
+present_names = showup_names &amp; all_students
+absent_names = all_students - showup_names
+
+# 轉換成列表（學號、姓名）
+# 這裡加上 key=lambda x: int(x[0])，依學號數值排序
+present_list = sorted([(a_dict[name], name) for name in present_names], key=lambda x: int(x[0]))
+absent_list = sorted([(a_dict[name], name) for name in absent_names], key=lambda x: int(x[0]))
+
+# === 輸出結果 ===
+print("✅ 出席名單（依座號排序）：")
+for i, (num, name) in enumerate(present_list, start=1):
+    print(f"{i:2d}. {num}\t{name}")
+
+print("\n❌ 缺席名單（依座號排序）：")
+for i, (num, name) in enumerate(absent_list, start=1):
+    print(f"{i:2d}. {num}\t{name}")
+
+# === 輸出 CSV ===
+pd.DataFrame(present_list, columns=["學號", "姓名"]).to_csv("1b_present.csv", index=False, encoding="utf-8-sig")
+pd.DataFrame(absent_list, columns=["學號", "姓名"]).to_csv("1b_absent.csv", index=False, encoding="utf-8-sig")
+
+print("\n📁 已輸出兩份檔案：1b_present.csv（出席）與 1b_absent.csv（缺席）")</pre>
+<p></p><h1>Project</h1>
 <p>既存技術:</p>
 <p style="padding-left: 30px;"><a href="https://github.com/scrum-1/respysive-slide">https://github.com/scrum-1/respysive-slide</a> (功能最完整，可以與許多 Python 模組結合)</p>
 <p style="padding-left: 30px;"><a href="https://github.com/tavallaie/pyreveal">https://github.com/tavallaie/pyreveal</a> </p>
@@ -504,16 +808,7 @@ x = y = z = 0  # 所有變數都為 0
 <li><strong>開發效率低：</strong> 如果學生沒有使用 CMSIMDE，他們將需要在多個工具和平台之間切換，這會浪費時間並降低效率。</li>
 <li><strong>難以協作：</strong> 沒有 CMSIMDE，學生將難以在一個平台上集中管理開發、測試和版本控制，協作會變得更加複雜。</li>
 </ul>
-<h1>報告開啟與推送指令</h1>
-<p>開啟.py檔案做簡報修改</p>
-<p>notepad test_pyreveal.py</p>
-<p>完成後按ctrl+s做儲存</p>
-<p>在cms上打python <span>test_pyreveal.py</span></p>
-<p>暫存修改<br/>git add .</p>
-<p>檢查工作目錄狀態<br/>git status</p>
-<p>提交修改<br/>git commit -" 更新!!"</p>
-<p>推送到遠端</p>
-<p>git push origin main</p><h1>Brython</h1>
+<h1>Brython</h1>
 <p><a href="https://brython.info/">Brython</a> 是一個將 <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a> 語法編譯為 <a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript">JavaScript</a> 的工具，能直接在瀏覽器中以 <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a> 撰寫前端網頁程式。</p>
 <p><button id="add1to100">1 add to 100</button><button id="robot1">機器人巡邏</button><button id="free_walk">自由行</button></p>
 <!-- 導入 brython 程式庫 -->
