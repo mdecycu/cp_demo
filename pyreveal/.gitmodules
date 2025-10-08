@@ -1,6 +1,0 @@
-[submodule "example/pyreveal/revealjs"]
-	path = example/pyreveal/revealjs
-	url = https://github.com/hakimel/reveal.js.git
-[submodule "pyreveal/revealjs"]
-	path = pyreveal/revealjs
-	url = https://github.com/hakimel/reveal.js.git
