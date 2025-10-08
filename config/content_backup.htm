@@ -264,6 +264,62 @@ showup_nums = sorted(list(set(showup_nums)), key=lambda x: int(x))
 pd.DataFrame(showup_nums, columns=["學號"]).to_csv("1b_w4_showup.csv", index=False, encoding="utf-8-sig")
 
 print(f"✅ 已將出席名單轉為學號並輸出至 1b_w4_showup.csv，共 {len(showup_nums)} 位學生")</pre>
+<p><a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/41423230zhang/4992d44ff4ecf05004a407317ff758e4/raw/2f84203834910a83467c526318821e299b6d5b57/1b_stud_list.py">1b_w4_list.py</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import pandas as pd
+
+# === 讀取全班學生名單 ===
+stud_df = pd.read_csv("1b_stud_list.csv", encoding='utf-8')
+stud_df.drop_duplicates(subset=[stud_df.columns[0]], inplace=True)
+
+# 建立姓名→學號字典
+a_dict = {}
+for row in stud_df.iloc[:, 0]:
+    parts = row.split('\t')
+    if len(parts) &gt;= 2:
+        student_num = parts[0].strip()
+        student_name = parts[1].strip()
+        a_dict[student_name] = student_num
+
+# 全部學生名單
+all_students = set(a_dict.keys())
+
+# === 讀取出席名單 ===
+show_df = pd.read_csv("1b_w4.csv", encoding='utf-16')
+show_df.drop_duplicates(subset=[show_df.columns[0]], inplace=True)
+names_list = show_df.iloc[:, 0].dropna().tolist()
+
+# 整理出席名單
+showup_names = set()
+for entry in names_list:
+    if isinstance(entry, str):
+        parts = entry.split('\t')
+        student_name = parts[0].strip() if len(parts) &gt;= 1 else entry.strip()
+        if student_name:
+            showup_names.add(student_name)
+
+# === 比對出席與缺席 ===
+present_names = showup_names &amp; all_students
+absent_names = all_students - showup_names
+
+# 轉換成列表（學號、姓名）
+# 這裡加上 key=lambda x: int(x[0])，依學號數值排序
+present_list = sorted([(a_dict[name], name) for name in present_names], key=lambda x: int(x[0]))
+absent_list = sorted([(a_dict[name], name) for name in absent_names], key=lambda x: int(x[0]))
+
+# === 輸出結果 ===
+print("✅ 出席名單（依座號排序）：")
+for i, (num, name) in enumerate(present_list, start=1):
+    print(f"{i:2d}. {num}\t{name}")
+
+print("\n❌ 缺席名單（依座號排序）：")
+for i, (num, name) in enumerate(absent_list, start=1):
+    print(f"{i:2d}. {num}\t{name}")
+
+# === 輸出 CSV ===
+pd.DataFrame(present_list, columns=["學號", "姓名"]).to_csv("1b_present.csv", index=False, encoding="utf-8-sig")
+pd.DataFrame(absent_list, columns=["學號", "姓名"]).to_csv("1b_absent.csv", index=False, encoding="utf-8-sig")
+
+print("\n📁 已輸出兩份檔案：1b_present.csv（出席）與 1b_absent.csv（缺席）")</pre>
 <p></p><h1>Project</h1>
 <p>既存技術:</p>
 <p style="padding-left: 30px;"><a href="https://github.com/scrum-1/respysive-slide">https://github.com/scrum-1/respysive-slide</a> (功能最完整，可以與許多 Python 模組結合)</p>
