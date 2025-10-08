@@ -7,6 +7,7 @@ bg_image_path = "assets/blockhole.jpg"
 presentation = PyReveal(title="My Presentation", theme="white", transition="slide")
 bg_image = ImageBackground(image_url=bg_image_path)
 
+<<<<<<< HEAD
 # 自訂全局字型樣式（放到 <head>）
 custom_head_style = """
 <meta charset="UTF-8">
@@ -23,6 +24,12 @@ body, h1, h2, h3, p, div {
 }
 </style>
 """
+=======
+# 加入幻燈片
+presentation.add_slide("Introduction to Computer Programming\n\
+Introduction to the components of the portable system", background=bg_image)
+presentation.add_slide("Another slide", background=bg_image)
+>>>>>>> 8d5f28a2 (更新!)
 
 # 投影片內容
 slides_content = [

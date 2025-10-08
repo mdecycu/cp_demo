@@ -30,12 +30,12 @@ slide2 = Slide()
 slide2.add_title('<span style="font-size:50px;">Git是什麼</span>')
 
 content_git = """
-<p class="fragment" style="font-size:36px;">「凡走過必留下痕跡」Git就是在做這件事情，任何一舉一動 Git 都記錄了下來，並且同步遠端的資料庫</p>
-<p class="fragment" style="font-size:36px;">Repository（儲存庫）：專案的資料夾，裡面有 Git 記錄的歷史。</p>
-<p class="fragment" style="font-size:36px;">Commit（提交）：你每次存檔，會有一個版本紀錄（誰改的、改了什麼）。</p>
-<p class="fragment" style="font-size:36px;">Branch（分支）：你可以平行開不同的開發線路，不會互相干擾。</p>
-<p class="fragment" style="font-size:36px;">Merge（合併）：把分支的改動整合回來。</p>
-<p class="fragment" style="font-size:36px;">Remote（遠端）：像 GitHub、GitLab、Bitbucket 這種雲端版本庫，讓大家可以同步合作。</p>
+<p class="fragment" style="font-size:30px;">「凡走過必留下痕跡」Git就是在做這件事情，任何一舉一動 Git 都記錄了下來，並且同步遠端的資料庫</p>
+<p class="fragment" style="font-size:30px;">Repository（儲存庫）：專案的資料夾，裡面有 Git 記錄的歷史。</p>
+<p class="fragment" style="font-size:30px;">Commit（提交）：你每次存檔，會有一個版本紀錄（誰改的、改了什麼）。</p>
+<p class="fragment" style="font-size:30px;">Branch（分支）：你可以平行開不同的開發線路，不會互相干擾。</p>
+<p class="fragment" style="font-size:30px;">Merge（合併）：把分支的改動整合回來。</p>
+<p class="fragment" style="font-size:30px;">Remote（遠端）：像 GitHub、GitLab、Bitbucket 這種雲端版本庫，讓大家可以同步合作。</p>
 """
 slide2.add_content([content_git])
 p.add_slide(slide2)
