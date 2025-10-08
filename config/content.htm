@@ -92,6 +92,42 @@ for two_line in range(x):
 if z % 2 != 0:
     r.turn_left()
     r.move(k-1)</pre>
+<p><a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/41423230zhang/1c8c4011f44ccd928fdc17145cd4953b/raw/028acdc9d69aa6987cd16035e3d54b2851761247/1b_w4_showup.py">1b_w4_showup.py</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import pandas as pd
+
+# === 讀取全班學生名單（學號\t姓名） ===
+stud_df = pd.read_csv("1b_stud_list.csv", encoding='utf-8')
+stud_df.drop_duplicates(subset=[stud_df.columns[0]], inplace=True)
+
+# 建立姓名→學號字典
+name_to_num = {}
+for row in stud_df.iloc[:, 0]:
+    parts = row.split('\t')
+    if len(parts) &gt;= 2:
+        student_num = parts[0].strip()
+        student_name = parts[1].strip()
+        name_to_num[student_name] = student_num
+
+# === 讀取出席名單 ===
+show_df = pd.read_csv("1b_w4.csv", encoding='utf-16')
+show_df.drop_duplicates(subset=[show_df.columns[0]], inplace=True)
+names_list = show_df.iloc[:, 0].dropna().tolist()
+
+# 將出席姓名轉為學號
+showup_nums = []
+for name in names_list:
+    if isinstance(name, str):
+        student_name = name.split('\t')[0].strip()  # 只取姓名部分
+        if student_name in name_to_num:
+            showup_nums.append(name_to_num[student_name])
+
+# 去重並依學號排序
+showup_nums = sorted(list(set(showup_nums)), key=lambda x: int(x))
+
+# === 輸出 CSV ===
+pd.DataFrame(showup_nums, columns=["學號"]).to_csv("1b_w4_showup.csv", index=False, encoding="utf-8-sig")
+
+print(f"✅ 已將出席名單轉為學號並輸出至 1b_w4_showup.csv，共 {len(showup_nums)} 位學生")</pre>
 <p></p><h1>Project</h1>
 <p>既存技術:</p>
 <p style="padding-left: 30px;"><a href="https://github.com/scrum-1/respysive-slide">https://github.com/scrum-1/respysive-slide</a> (功能最完整，可以與許多 Python 模組結合)</p>
